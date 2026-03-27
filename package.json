@@ -1,0 +1,13 @@
+{
+  "name": "countryfarm",
+  "version": "1.0.0",
+  "description": "CountryFarm - Chicken booking system",
+  "scripts": {
+    "start": "cd backend && npm start",
+    "dev": "cd backend && npm run dev",
+    "install": "cd backend && npm install"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}
