@@ -2,6 +2,9 @@
   "name": "backend",
   "version": "1.0.0",
   "description": "",
+  "engines": {
+    "node": ">=22.12.0"
+  },
   "main": "src/server.js",
   "scripts": {
     "dev": "nodemon src/server.js",

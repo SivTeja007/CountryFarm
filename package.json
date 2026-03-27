@@ -2,6 +2,9 @@
   "name": "countryfarm",
   "version": "1.0.0",
   "description": "CountryFarm - Chicken booking system",
+  "engines": {
+    "node": ">=22.12.0"
+  },
   "scripts": {
     "start": "cd backend && npm start",
     "dev": "cd backend && npm run dev",
