@@ -2,25 +2,26 @@ const { PrismaClient } = require('@prisma/client');
 const { PrismaPg } = require('@prisma/adapter-pg');
 const { Pool } = require('pg');
 
-if (!process.env.DATABASE_URL) {
-  throw new Error('DATABASE_URL is required and must point to Neon PostgreSQL.');
-}
+const hasDatabaseUrl =
+  !!process.env.DATABASE_URL &&
+  !process.env.DATABASE_URL.includes('<user>') &&
+  !process.env.DATABASE_URL.includes('<neon-host>');
 
-if (process.env.DATABASE_URL.includes('<user>') || process.env.DATABASE_URL.includes('<neon-host>')) {
-  throw new Error('DATABASE_URL contains placeholders. Replace it with a real Neon connection string.');
-}
+const pool = hasDatabaseUrl
+  ? new Pool({
+      connectionString: process.env.DATABASE_URL,
+    })
+  : null;
 
-const pool = new Pool({
-  connectionString: process.env.DATABASE_URL,
-});
+const adapter = pool ? new PrismaPg(pool) : null;
 
-const adapter = new PrismaPg(pool);
-
-const prisma = new PrismaClient({
-  adapter,
-});
+const prisma = adapter ? new PrismaClient({ adapter }) : null;
 
 async function checkDatabaseConnection() {
+  if (!prisma) {
+    throw new Error('DATABASE_URL is missing or invalid.');
+  }
+
   await prisma.$connect();
   await prisma.$queryRawUnsafe('SELECT 1');
 }

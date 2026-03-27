@@ -26,7 +26,8 @@ app.get('/api/health', async (req, res) => {
     await checkDatabaseConnection();
     return res.status(200).json({
       ok: true,
-      message: 'Backend is running and connected to PostgreSQL',
+      message: 'Backend is running',
+      database: 'connected',
     });
   } catch (error) {
     const normalizedMessage =
@@ -35,9 +36,10 @@ app.get('/api/health', async (req, res) => {
       (error && JSON.stringify(error)) ||
       String(error || 'Unknown database error');
 
-    return res.status(500).json({
-      ok: false,
-      message: 'Backend is running but PostgreSQL connection failed',
+    return res.status(200).json({
+      ok: true,
+      message: 'Backend is running',
+      database: 'disconnected',
       error: normalizedMessage,
     });
   }
