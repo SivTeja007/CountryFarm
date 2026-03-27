@@ -1,0 +1,37 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model User {
+  id     Int     @id @default(autoincrement())
+  phone  String  @unique
+  orders Order[]
+
+  @@map("users")
+}
+
+model Order {
+  id           Int       @id @default(autoincrement())
+  userId       Int       @map("user_id")
+  weightRange  String    @map("weight_range")
+  quantity     Int
+  deliveryDate DateTime  @db.Date @map("delivery_date")
+  deliverySlot String    @map("delivery_slot")
+  address      String
+  notes        String?
+  status       String    @default("Pending")
+  finalWeight  Decimal?  @db.Decimal(5, 2) @map("final_weight")
+  finalPrice   Decimal?  @db.Decimal(10, 2) @map("final_price")
+  createdAt    DateTime  @default(now()) @db.Timestamptz(6) @map("created_at")
+  updatedAt    DateTime  @updatedAt @db.Timestamptz(6) @map("updated_at")
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([deliveryDate], map: "idx_orders_delivery_date")
+  @@index([status], map: "idx_orders_status")
+  @@map("orders")
+}
