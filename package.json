@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "CountryFarm - Chicken booking system",
   "engines": {
-    "node": ">=22.12.0"
+    "node": ">=20.19.0"
   },
   "scripts": {
     "start": "cd backend && npm start",
