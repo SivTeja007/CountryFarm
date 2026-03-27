@@ -24,11 +24,11 @@
     "cors": "^2.8.6",
     "dotenv": "^17.3.1",
     "express": "^5.2.1",
+    "prisma": "^7.5.0",
     "twilio": "^4.10.0",
     "node-schedule": "^2.1.1"
   },
   "devDependencies": {
-    "nodemon": "^3.1.14",
-    "prisma": "^7.5.0"
+    "nodemon": "^3.1.14"
   }
 }
